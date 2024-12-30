@@ -1,4 +1,4 @@
-package com.example.casal_rico
+package com.example.sopegar
 
 import io.flutter.embedding.android.FlutterActivity
 

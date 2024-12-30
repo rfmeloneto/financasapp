@@ -1,3 +1,4 @@
+import 'package:casal_rico/ui/pages/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -20,12 +21,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed:  Colors.deepPurple,
         ),
-      ),
+      debugShowCheckedModeBanner: false,
+      home: const AuthGate(),
     );
   }
 }

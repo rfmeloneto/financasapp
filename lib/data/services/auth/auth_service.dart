@@ -31,4 +31,8 @@ class AuthService{
   Future<User?> getUser() async {
     return supabase.auth.currentUser;
   }
+
+  Stream<AuthState> onAuthStateChange() {
+    return supabase.auth.onAuthStateChange;
+  }
 }
