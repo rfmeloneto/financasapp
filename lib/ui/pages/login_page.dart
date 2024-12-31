@@ -1,3 +1,4 @@
+import 'package:casal_rico/ui/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,7 +11,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  LoginViewModel loginViewModel = LoginViewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +44,21 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 child: const Text('Login'),
-                onPressed: () {
-                  // TODO: Implement login logic
+                onPressed: () async {
+                  loginViewModel.login(emailController.text, passwordController.text);
+                  ListenableBuilder(
+                    listenable: loginViewModel,
+                    builder: (context, child) {
+                      Widget child = const SizedBox();
+                      if(loginViewModel.success){
+                        Navigator.pushNamed(context, '/home');
+                      }
+                      else{
+                        child = const SnackBar(content:Text("Error"));
+                      }
+                      return child;
+                    },
+                  );
                 },  
                     ),
             ),],),),

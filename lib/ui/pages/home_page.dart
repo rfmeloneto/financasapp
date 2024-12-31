@@ -1,3 +1,4 @@
+import 'package:casal_rico/ui/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,6 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  LoginViewModel loginViewModel = LoginViewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +21,12 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.deepPurple[500],
         centerTitle: true,
         elevation: 0.0,
+        actions: [
+          IconButton(onPressed: (){
+            loginViewModel.logout();
+            Navigator.pushNamed(context, '/login');
+          }, icon: const Icon(Icons.logout, color: Colors.white,),)
+        ],
       ),
     );
   }

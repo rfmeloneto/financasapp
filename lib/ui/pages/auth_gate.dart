@@ -1,32 +1,35 @@
-import 'package:casal_rico/data/repositories/auth/auth_repository.dart';
-import 'package:casal_rico/data/services/auth/auth_service.dart';
-import 'package:casal_rico/ui/pages/home_page.dart';
-import 'package:casal_rico/ui/pages/login_page.dart';
+import 'package:casal_rico/ui/injections/auth_gate_injection.dart';
 import 'package:flutter/material.dart';
-
-import '../../data/repositories/auth/auth_repository_imp.dart';
+import '../view_model/auth_gate_view_model.dart';
 
 class AuthGate extends StatefulWidget {
-  const AuthGate({super.key});
+  final Widget loginPage;
+  final Widget homePage;
+  final AuthGateViewModel authGateViewModel = AuthGateInjection.instance;
+  AuthGate({required this.loginPage, required this.homePage, super.key});
 
   @override
   State<AuthGate> createState() => _AuthGateState();
 }
 
 class _AuthGateState extends State<AuthGate> {
-  late AuthRepository authRepository;
-  AuthService authService = AuthService();
-  @override
-  void initState() {
-    super.initState();
-    authRepository = AuthRepositoryImp(authService: authService);
-    
-  }
   @override
   Widget build(BuildContext context) {
-    return authRepository.authPageDirection(
-      loginPage: const LoginPage(),
-      homePage: const HomePage()
+    return ListenableBuilder(
+      listenable: widget.authGateViewModel,
+      builder: (context, child) {
+        Widget child = SizedBox(child:Text("Error"));
+        if(widget.authGateViewModel.isLoading){
+           child = const CircularProgressIndicator();
+        }
+        else if(widget.authGateViewModel.goToLogin){
+          child = widget.loginPage;
+        }
+        else if(!widget.authGateViewModel.goToLogin){
+          child =widget.homePage;
+        }
+        return child;
+      },
     );
   }
 }

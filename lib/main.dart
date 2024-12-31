@@ -1,4 +1,6 @@
 import 'package:casal_rico/ui/pages/auth_gate.dart';
+import 'package:casal_rico/ui/pages/home_page.dart';
+import 'package:casal_rico/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -22,12 +24,15 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/': (context) => AuthGate(loginPage: LoginPage(), homePage: HomePage(),),
+        '/login': (context) => LoginPage(),
+        '/home': (context) => HomePage(),},
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed:  Colors.deepPurple,
         ),
       debugShowCheckedModeBanner: false,
-      home: const AuthGate(),
     );
   }
 }

@@ -7,25 +7,41 @@ class AuthRepositoryImp implements AuthRepository{
   @override
   final AuthService authService;
   AuthRepositoryImp({required this.authService});
+  //@override
+  // Widget authPageDirection({required Widget loginPage, required Widget homePage}) {
+  //   Session? session;
+  //   return StreamBuilder<AuthState>(
+  //     stream: authService.onAuthStateChange(),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return Scaffold(
+  //           backgroundColor: Colors.deepPurple[500],
+  //           body: const Center(
+  //             child: CircularProgressIndicator(),
+  //           ));
+  //       }
+
+  //       session = snapshot.hasData ? snapshot.data!.session : null;
+
+  //       return session != null ? homePage : loginPage;
+  //     },
+  //   );
+
+  // }
   @override
-  Widget authPageDirection({required Widget loginPage, required Widget homePage}) {
-    Session? session;
-    return StreamBuilder<AuthState>(
-      stream: authService.onAuthStateChange(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            backgroundColor: Colors.deepPurple[500],
-            body: const Center(
-              child: CircularProgressIndicator(),
-            ));
-        }
-
-        session = snapshot.hasData ? snapshot.data!.session : null;
-
-        return session != null ? homePage : loginPage;
-      },
-    );
-
+  Stream<AuthState> onAuthStateChange() {
+    return authService.onAuthStateChange();
   }
+
+  @override
+  Future<AuthResponse> login(String email, String password) {
+    return authService.login(email, password);
+  }
+
+  @override
+  Future<void> logOut() {
+    return authService.logout();
+  }
+  
+  
 }
