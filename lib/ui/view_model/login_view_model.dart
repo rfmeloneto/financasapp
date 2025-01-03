@@ -1,10 +1,10 @@
-import 'package:casal_rico/data/repositories/auth/auth_repository.dart';
-import 'package:casal_rico/data/repositories/auth/auth_repository_imp.dart';
-import 'package:casal_rico/data/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/repositories/auth/auth_repository.dart';
+import '../injections/get_injection.dart';
+
 class LoginViewModel extends ChangeNotifier {
-  final AuthRepository authRepository = AuthRepositoryImp(authService:AuthService());
+  final AuthRepository authRepository = LoginInjection.instance;
 
   bool _isLoading = false;
   bool _success = false;

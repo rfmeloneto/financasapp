@@ -7,6 +7,8 @@ class EntryEntity {
   final String? description;
   final double amount;
   final DateTime date;
+  late int year;
+  late int month;
 
   EntryEntity({
     this.description,
@@ -17,7 +19,10 @@ class EntryEntity {
     required this.title,
     required this.amount,
     required this.date,
-  });
+  }){
+    year = date.year;
+    month = date.month;
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -29,10 +34,12 @@ class EntryEntity {
       'incomeCategory': incomeCategory,
       'amount': amount,
       'date': date.toIso8601String(),
+      'year': year,
+      'month': month,
     };
   }
 
-  factory EntryEntity.fromJson(Map<String, dynamic> json) {
+  factory EntryEntity.fromMap(Map<String, dynamic> json) {
     return EntryEntity(
       id: json['id'],
       title: json['title'],

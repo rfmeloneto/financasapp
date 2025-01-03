@@ -1,4 +1,4 @@
-import 'package:casal_rico/ui/injections/auth_gate_injection.dart';
+import 'package:casal_rico/ui/injections/get_injection.dart';
 import 'package:flutter/material.dart';
 import '../view_model/auth_gate_view_model.dart';
 
