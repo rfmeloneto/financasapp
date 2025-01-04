@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple[500],
+      backgroundColor: Colors.deepPurple[200],
       appBar: AppBar(
         leading: Icon(Icons.monetization_on, color: Colors.white,),
         title: const Text('Casal Rico',
@@ -32,13 +32,38 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: 'Email',labelStyle: TextStyle(color: Colors.white), border: OutlineInputBorder(borderRadius:BorderRadius.all(Radius.circular(20))), ),
+              decoration: const InputDecoration(labelText: 'Email',
+              labelStyle: TextStyle(color: Colors.white),
+              enabledBorder:OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white), 
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.deepPurple),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),),
+              
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: passwordController,
-              decoration: const InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.white), border: OutlineInputBorder(borderRadius:BorderRadius.all(Radius.circular(20))),),
+              decoration: const InputDecoration(
+              labelText: 'Password',
+              labelStyle: TextStyle(color: Colors.white),
+              enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white), 
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.deepPurple),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              )
+              ),
               obscureText: true,
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              
+
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

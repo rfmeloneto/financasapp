@@ -1,6 +1,6 @@
 class ExpenseCategoryEntity {
   final String categoryName;
-  final bool isFundamental;
+  bool? isFundamental;
 
   ExpenseCategoryEntity({required this.categoryName, required this.isFundamental});
 

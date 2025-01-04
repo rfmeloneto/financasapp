@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'ui/pages/expense_category_page.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -27,7 +29,8 @@ class MainApp extends StatelessWidget {
       routes: {
         '/': (context) => AuthGate(loginPage: LoginPage(), homePage: HomePage(),),
         '/login': (context) => LoginPage(),
-        '/home': (context) => HomePage(),},
+        '/home': (context) => HomePage(),
+        '/categorias-despesas': (context) => ExpenseCategoryPage(),},
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed:  Colors.deepPurple,

@@ -42,7 +42,7 @@ class ApiService{
   }
 
   Future<void> updateExpenseCategory(Map<String, dynamic> expenseCategory) async {
-    await Supabase.instance.client.from('ExpenseCategories').update(expenseCategory).eq('id', expenseCategory['id']);
+    await Supabase.instance.client.from('ExpenseCategories').update(expenseCategory).eq('categoryName', expenseCategory['categoryName']);
   }
 
   Future<void> deleteExpenseCategory(int id) async {
