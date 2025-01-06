@@ -1,65 +1,13 @@
-// import 'package:casal_rico/ui/injections/get_injection.dart';
-// import 'package:flutter/material.dart';
 
-// import '../view_model/expenses_view_model.dart';
-
-// class ExpenseCategoryPage extends StatefulWidget {
-//   const ExpenseCategoryPage({super.key});
-
-//   @override
-//   State<ExpenseCategoryPage> createState() => _ExpenseCategoryPageState();
-// }
-
-// class _ExpenseCategoryPageState extends State<ExpenseCategoryPage> {
-//   ExpensesViewModel expensesViewModel = ExpenseCategoryInjection.instance;
-//   TextEditingController categoryNameController = TextEditingController();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Categorias de Despesas', style: TextStyle(color: Colors.white),),
-//         backgroundColor: Colors.deepPurple[500],
-//       ),
-
-//       body: Expanded(
-//         child: Column(
-//           children: [
-//             ListenableBuilder(listenable: expensesViewModel,
-//              builder: (context, child) {
-//               return ListView.builder(
-//                 itemCount: expensesViewModel.entries.length,
-//                 itemBuilder: (context, index) {
-//                   return ListTile(
-//                     title: Text(expensesViewModel.entries[index].categoryName),
-//                     trailing: Checkbox(value: expensesViewModel.entries[index].isFundamental ?? false , onChanged:
-//                       (value) {
-//                           expensesViewModel.entries[index].isFundamental = value!;
-//                           expensesViewModel.updateExpenseCategory(expensesViewModel.entries[index].toMap());
-//                       }
-//                     ),
-//                   );
-//                 },
-//               );
-//              },
-//             ),
-//             ElevatedButton(child: const Text('Nova Categoria'),onPressed: () {
-//               expensesViewModel.addExpenseCategory({'categoryName': categoryNameController.text, 'isFundamental': false});
-//               categoryNameController.clear();
-//               Navigator.pop(context);
-//             },)
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 import 'package:casal_rico/ui/injections/get_injection.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../shared/widgets/dialog_widget.dart';
 import '../view_model/expenses_view_model.dart';
-import '../widgets/app_bar_widget.dart';
-import '../widgets/drawer_widget.dart';
+import '../../shared/widgets/app_bar_widget.dart';
+import '../../shared/widgets/drawer_widget.dart';
 
 class ExpenseCategoryPage extends StatefulWidget {
   const ExpenseCategoryPage({super.key});
@@ -69,17 +17,18 @@ class ExpenseCategoryPage extends StatefulWidget {
 }
 
 class _ExpenseCategoryPageState extends State<ExpenseCategoryPage> {
-  ExpensesViewModel expensesViewModel = ExpenseCategoryInjection.instance;
+  // ExpensesViewModel expensesViewModel = ExpenseCategoryInjection.instance;
   TextEditingController categoryNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    expensesViewModel.getAllExpenseCategory();
+    context.read<ExpensesViewModel>().getAllExpenseCategory();
   }
 
   @override
   Widget build(BuildContext context) {
+    ExpensesViewModel expensesViewModel = context.watch<ExpensesViewModel>();
     return Scaffold(
       appBar: const AppBarWidget(title: 'Categorias de Despesas'),
       drawer: const DrawerWidget(),
@@ -89,52 +38,84 @@ class _ExpenseCategoryPageState extends State<ExpenseCategoryPage> {
             child: ListenableBuilder(
               listenable: expensesViewModel,
               builder: (context, child) {
+                if(expensesViewModel.isLoading) {
+                  return Center(child: const CircularProgressIndicator());
+                }else{
                 return ListView.builder(
                   itemCount: expensesViewModel.entries.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(expensesViewModel.entries[index].categoryName),
-                      trailing: Checkbox(
-                        value: expensesViewModel.entries[index].isFundamental ?? false,
-                        onChanged: (value) {
-                          expensesViewModel.entries[index].isFundamental = !expensesViewModel.entries[index].isFundamental!;
-                          expensesViewModel.updateExpenseCategory(expensesViewModel.entries[index].toMap());
-                        },
-                      ),
+                      trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {
+                        context.read<ExpensesViewModel>().deleteExpenseCategory(expensesViewModel.entries[index].id); 
+                      },)
                     );
                   },
-                );
+                );}
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: categoryNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Nova Categoria',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  child: const Text('Adicionar'),
-                  onPressed: () {
-                    expensesViewModel.addExpenseCategory({
-                      'categoryName': categoryNameController.text,
-                      'isFundamental': false,
-                    });
-                    categoryNameController.clear();
-                  },
-                ),
-              ],
-            ),
-          ),
+          //
+          // Consumer<ExpensesViewModel>(
+          //   builder: (context, expensesViewModel, child) {
+          //     return Expanded(
+          //       child: ListView.builder(
+          //         itemCount: expensesViewModel.entries.length,
+          //         itemBuilder: (context, index) {
+          //           return ListTile(
+          //             title: Text(expensesViewModel.entries[index].categoryName),
+          //             trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {
+          //               expensesViewModel.deleteExpenseCategory(expensesViewModel.entries[index].id); 
+          //             },)
+          //           );
+          //         },
+          //       ),
+          //     );
+          //   },
+          // )
+          //
+          // Expanded(
+          //   child: ListenableBuilder(
+          //     listenable: expensesViewModel,
+          //     builder: (context, child) {
+          //       if(expensesViewModel.isLoading) {
+          //         return Center(child: const CircularProgressIndicator());
+          //       }else{
+          //       return ListView.builder(
+          //         itemCount: expensesViewModel.entries.length,
+          //         itemBuilder: (context, index) {
+          //           return ListTile(
+          //             title: Text(expensesViewModel.entries[index].categoryName),
+          //             trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {
+          //               expensesViewModel.deleteExpenseCategory(expensesViewModel.entries[index].id); 
+          //             },)
+          //           );
+          //         },
+          //       );}
+          //     },
+          //   ),
+          // ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return DialogWidget(
+                title: 'Adicionar Categoria',
+                callback: () {
+                  context.read<ExpensesViewModel>().addExpenseCategory({
+                    'categoryName': categoryNameController.text,
+                  });
+                },
+                controller: categoryNameController,
+                
+              );
+            },
+          );
+        },
       ),
     );
   }

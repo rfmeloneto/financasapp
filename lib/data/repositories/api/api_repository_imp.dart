@@ -81,27 +81,27 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  void addExpenseCategory(Map<String, dynamic> expenseCategory) async {
+  Future<void> addExpenseCategory(Map<String, dynamic> expenseCategory) async{
     try{
-      return await apiService.addExpenseCategory(expenseCategory);
+      await apiService.addExpenseCategory(expenseCategory);
     }catch(e){
       throw Exception(e);
     }
   }
 
   @override
-  void updateExpenseCategory(Map<String, dynamic> expenseCategory) async {
+  Future<void> updateExpenseCategory(Map<String, dynamic> expenseCategory) async {
     try{
-      return  await apiService.updateExpenseCategory(expenseCategory);
+      await apiService.updateExpenseCategory(expenseCategory);
     }catch(e){
       throw Exception(e);
     }
   }
 
   @override
-  void deleteExpenseCategory(int id) async {
+  Future<void> deleteExpenseCategory(int id) async{
     try{
-      return await apiService.deleteExpenseCategory(id);
+     await apiService.deleteExpenseCategory(id);
     }catch(e){
       throw Exception(e);
     }

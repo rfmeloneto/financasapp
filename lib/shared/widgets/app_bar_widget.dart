@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../view_model/login_view_model.dart';
+import '../../ui/view_model/login_view_model.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;

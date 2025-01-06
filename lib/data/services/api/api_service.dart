@@ -32,6 +32,12 @@ class ApiService{
     await Supabase.instance.client.from('Entries').delete().eq('id', id);
   }
 
+
+
+
+
+
+
   Future<List<Map<String, dynamic>>> getAllExpenseCategory() async {
     final response = await Supabase.instance.client.from('ExpenseCategories').select();
     return response;
@@ -42,12 +48,20 @@ class ApiService{
   }
 
   Future<void> updateExpenseCategory(Map<String, dynamic> expenseCategory) async {
-    await Supabase.instance.client.from('ExpenseCategories').update(expenseCategory).eq('categoryName', expenseCategory['categoryName']);
+    await Supabase.instance.client.from('ExpenseCategories').update(expenseCategory).eq('id', expenseCategory['id']);
   }
 
   Future<void> deleteExpenseCategory(int id) async {
     await Supabase.instance.client.from('ExpenseCategories').delete().eq('id', id);
   }
+
+
+
+
+
+
+
+
 
   Future<List<Map<String, dynamic>>> getAllIncomeCategory() async {
     final response = await Supabase.instance.client.from('IncomeCategories').select();

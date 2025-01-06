@@ -1,20 +1,20 @@
 class ExpenseCategoryEntity {
+  final int id;
   final String categoryName;
-  bool? isFundamental;
+  
 
-  ExpenseCategoryEntity({required this.categoryName, required this.isFundamental});
+  ExpenseCategoryEntity({required this.id, required this.categoryName});
 
   Map<String, dynamic> toMap() {
     return {
       'categoryName': categoryName,
-      'isFundamental': isFundamental
     };
   }
 
   factory ExpenseCategoryEntity.fromMap(Map<String, dynamic> map) {
     return ExpenseCategoryEntity(
+      id: map['id'],
       categoryName: map['categoryName'] ?? '',
-      isFundamental: map['isFundamental'] ?? false
     );
   }
 }

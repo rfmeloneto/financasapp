@@ -4,14 +4,13 @@ class EntryEntity {
   final String? expenseCategory;
   final bool isExpense;
   final String title;
-  final String? description;
   final double amount;
   final DateTime date;
   late int year;
   late int month;
+  final bool isFundamental;
 
   EntryEntity({
-    this.description,
     this.incomeCategory,
     this.expenseCategory,
     required this.id,
@@ -19,6 +18,7 @@ class EntryEntity {
     required this.title,
     required this.amount,
     required this.date,
+    required this.isFundamental
   }){
     year = date.year;
     month = date.month;
@@ -28,7 +28,6 @@ class EntryEntity {
     return {
       'id': id,
       'title': title,
-      'description': description,
       'isExpense': isExpense,
       'expenseCategory': expenseCategory,
       'incomeCategory': incomeCategory,
@@ -36,6 +35,7 @@ class EntryEntity {
       'date': date.toIso8601String(),
       'year': year,
       'month': month,
+      'isFundamental':isFundamental,
     };
   }
 
@@ -43,12 +43,12 @@ class EntryEntity {
     return EntryEntity(
       id: json['id'],
       title: json['title'],
-      description: json['description'],
       isExpense: json['isExpense'],
       expenseCategory: json['expenseCategory'],
       incomeCategory: json['incomeCategory'],
       amount: json['amount'],
       date: DateTime.parse(json['date']),
+      isFundamental: json['isFundamental'],
     );
   }
 }
