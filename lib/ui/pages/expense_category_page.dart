@@ -1,5 +1,6 @@
 
 
+import 'package:casal_rico/shared/widgets/list_tile_widget.dart';
 import 'package:casal_rico/ui/injections/get_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,73 +29,26 @@ class _ExpenseCategoryPageState extends State<ExpenseCategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    ExpensesViewModel expensesViewModel = context.watch<ExpensesViewModel>();
     return Scaffold(
       appBar: const AppBarWidget(title: 'Categorias de Despesas'),
       drawer: const DrawerWidget(),
       body: Column(
         children: [
-          Expanded(
-            child: ListenableBuilder(
-              listenable: expensesViewModel,
-              builder: (context, child) {
-                if(expensesViewModel.isLoading) {
-                  return Center(child: const CircularProgressIndicator());
-                }else{
-                return ListView.builder(
+          Consumer<ExpensesViewModel>(
+            builder: (context, expensesViewModel, child) {
+              return Expanded(
+                child: ListView.builder(
                   itemCount: expensesViewModel.entries.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(expensesViewModel.entries[index].categoryName),
-                      trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {
-                        context.read<ExpensesViewModel>().deleteExpenseCategory(expensesViewModel.entries[index].id); 
-                      },)
-                    );
+                    return ListTileWidget(viewModel: expensesViewModel, index: index, callback: () {
+                      expensesViewModel.deleteExpenseCategory(expensesViewModel.entries[index].id!);
+                    });
                   },
-                );}
-              },
-            ),
-          ),
-          //
-          // Consumer<ExpensesViewModel>(
-          //   builder: (context, expensesViewModel, child) {
-          //     return Expanded(
-          //       child: ListView.builder(
-          //         itemCount: expensesViewModel.entries.length,
-          //         itemBuilder: (context, index) {
-          //           return ListTile(
-          //             title: Text(expensesViewModel.entries[index].categoryName),
-          //             trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {
-          //               expensesViewModel.deleteExpenseCategory(expensesViewModel.entries[index].id); 
-          //             },)
-          //           );
-          //         },
-          //       ),
-          //     );
-          //   },
-          // )
-          //
-          // Expanded(
-          //   child: ListenableBuilder(
-          //     listenable: expensesViewModel,
-          //     builder: (context, child) {
-          //       if(expensesViewModel.isLoading) {
-          //         return Center(child: const CircularProgressIndicator());
-          //       }else{
-          //       return ListView.builder(
-          //         itemCount: expensesViewModel.entries.length,
-          //         itemBuilder: (context, index) {
-          //           return ListTile(
-          //             title: Text(expensesViewModel.entries[index].categoryName),
-          //             trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {
-          //               expensesViewModel.deleteExpenseCategory(expensesViewModel.entries[index].id); 
-          //             },)
-          //           );
-          //         },
-          //       );}
-          //     },
-          //   ),
-          // ),
+                ),
+              );
+            },
+          )
+         
         ],
       ),
       floatingActionButton: FloatingActionButton(

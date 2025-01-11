@@ -44,7 +44,7 @@ class MainApp extends StatelessWidget {
           '/categorias-despesas': (context) => ExpenseCategoryPage(),},
         theme: ThemeData(
           useMaterial3: true,
-          scaffoldBackgroundColor: Colors.deepPurple[100],
+          scaffoldBackgroundColor: Colors.white,
           ),
         debugShowCheckedModeBanner: false,
       ),

@@ -1,5 +1,5 @@
 class ExpenseCategoryEntity {
-  final int id;
+  final int? id;
   final String categoryName;
   
 
