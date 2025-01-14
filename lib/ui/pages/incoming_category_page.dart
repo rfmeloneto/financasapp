@@ -3,25 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../shared/widgets/dialog_widget.dart';
-import '../view_model/expenses_view_model.dart';
 import '../../shared/widgets/app_bar_widget.dart';
 import '../../shared/widgets/drawer_widget.dart';
+import '../view_model/incoming_view_model.dart';
 
-class ExpenseCategoryPage extends StatefulWidget {
-  const ExpenseCategoryPage({super.key});
+class IncomeCategoryPage extends StatefulWidget {
+  const IncomeCategoryPage({super.key});
 
   @override
-  State<ExpenseCategoryPage> createState() => _ExpenseCategoryPageState();
+  State<IncomeCategoryPage> createState() => _IncomeCategoryPageState();
 }
 
-class _ExpenseCategoryPageState extends State<ExpenseCategoryPage> {
-  // ExpensesViewModel expensesViewModel = ExpenseCategoryInjection.instance;
+class _IncomeCategoryPageState extends State<IncomeCategoryPage> {
   TextEditingController categoryNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    context.read<ExpensesViewModel>().getAllExpenseCategory();
+    context.read<IncomeViewModel>().getAllIncomeCategory();
   }
 
   @override
@@ -31,14 +30,14 @@ class _ExpenseCategoryPageState extends State<ExpenseCategoryPage> {
       drawer: const DrawerWidget(),
       body: Column(
         children: [
-          Consumer<ExpensesViewModel>(
-            builder: (context, expensesViewModel, child) {
+          Consumer<IncomeViewModel>(
+            builder: (context, incomesViewModel, child) {
               return Expanded(
                 child: ListView.builder(
-                  itemCount: expensesViewModel.entries.length,
+                  itemCount: incomesViewModel.entries.length,
                   itemBuilder: (context, index) {
-                    return ListTileWidget(viewModel: expensesViewModel, index: index, callback: () {
-                      expensesViewModel.deleteExpenseCategory(expensesViewModel.entries[index].id!);
+                    return ListTileWidget(viewModel: incomesViewModel, index: index, callback: () {
+                      incomesViewModel.deleteIncomeCategory(incomesViewModel.entries[index].id!);
                     });
                   },
                 ),
@@ -57,7 +56,7 @@ class _ExpenseCategoryPageState extends State<ExpenseCategoryPage> {
               return DialogWidget(
                 title: 'Adicionar Categoria',
                 callback: () {
-                  context.read<ExpensesViewModel>().addExpenseCategory({
+                  context.read<IncomeViewModel>().addIncomeCategory({
                     'categoryName': categoryNameController.text,
                   });
                 },

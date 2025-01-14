@@ -1,7 +1,8 @@
 class IncomeCategoryEntity {
+  final int? id;
   final String categoryName;
 
-  IncomeCategoryEntity({required this.categoryName});
+  IncomeCategoryEntity({ this.id,required this.categoryName});
 
   Map<String, dynamic> toMap() {
     return {
@@ -11,6 +12,7 @@ class IncomeCategoryEntity {
 
   factory IncomeCategoryEntity.fromMap(Map<String, dynamic> map) {
     return IncomeCategoryEntity(
+      id: map['id'],
       categoryName: map['categoryName'] ?? '',
     );
   }

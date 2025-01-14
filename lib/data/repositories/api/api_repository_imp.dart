@@ -24,10 +24,10 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  Future<List<EntryEntity>> getEntryByMonthYear(int? month, int? year) async {
+  Future<List<EntryEntity>> getEntryByParam(Map<String, dynamic> param) async {
     List<EntryEntity> result = [];
     try{
-      final response = await apiService.getEntryByMonthYear(month, year);
+      final response = await apiService.getEntryByParam(param);
       for (var element in response) {
         result.add(EntryEntity.fromMap(element));
       }
@@ -122,7 +122,7 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  void addIncomeCategory(Map<String, dynamic> incomeCategory) async {
+  Future<void> addIncomeCategory(Map<String, dynamic> incomeCategory) async {
     try{
       return await apiService.addIncomeCategory(incomeCategory);  
     }catch(e){
@@ -132,7 +132,7 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  void updateIncomeCategory(Map<String, dynamic> incomeCategory) async {
+  Future<void> updateIncomeCategory(Map<String, dynamic> incomeCategory) async {
     try{
       return await apiService.updateIncomeCategory(incomeCategory);
     }catch(e){
@@ -141,7 +141,7 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  void deleteIncomeCategory(int id) async {
+  Future<void> deleteIncomeCategory(int id) async {
     try{
       return await apiService.deleteIncomeCategory(id);
     }catch(e){

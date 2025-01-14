@@ -5,18 +5,18 @@ class ApiService{
     final response = await Supabase.instance.client.from('Entries').select();
     return response;
   }
-  Future<List<Map<String, dynamic>>> getEntryByMonthYear(int? month, int? year) async {
+  Future<List<Map<String, dynamic>>> getEntryByParam(Map<String, dynamic> param) async {
     List<Map<String, dynamic>> response = [];
-    if(month == null){
-      response = await Supabase.instance.client.from('Entries').select().eq('year', year!);
-    }
-    else if (year == null){
-      response = await Supabase.instance.client.from('Entries').select().eq('month', month);
-    }
-    else{
-      response = await Supabase.instance.client.from('Entries').select().eq('month', month).eq('year', year);
+
+    var query = Supabase.instance.client.from('Entries').select();
+
+    for (var key in param.keys) {
+        query = query.eq(key, param[key]);
       }
-   
+
+    response = await query;
+    
+
     return response;
   }
 

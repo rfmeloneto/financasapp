@@ -1,16 +1,11 @@
-import 'package:casal_rico/data/repositories/api/api_repository.dart';
-import 'package:casal_rico/data/repositories/api/api_repository_imp.dart';
-import 'package:casal_rico/data/services/api/api_service.dart';
-import 'package:casal_rico/ui/pages/auth_gate.dart';
-import 'package:casal_rico/ui/pages/home_page.dart';
-import 'package:casal_rico/ui/pages/login_page.dart';
-import 'package:casal_rico/ui/view_model/expenses_view_model.dart';
+
+import 'package:casal_rico/shared/providers/providers_list.dart';
+import 'package:casal_rico/shared/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'ui/pages/expense_category_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,17 +26,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        Provider<ApiService>(create: (context) => ApiService()),
-        Provider<ApiRepository>(create: (context) => ApiRepositoryImp(apiService: context.read<ApiService>())),
-        ChangeNotifierProvider<ExpensesViewModel>(create: (context) => ExpensesViewModel(apiRepository: context.read<ApiRepository>())),
-      ],
+      providers: ProvidersList.providers,
       child: MaterialApp(
-        routes: {
-          '/': (context) => AuthGate(loginPage: LoginPage(), homePage: HomePage(),),
-          '/login': (context) => LoginPage(),
-          '/home': (context) => HomePage(),
-          '/categorias-despesas': (context) => ExpenseCategoryPage(),},
+        routes: Routes.routes,
         theme: ThemeData(
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white,
