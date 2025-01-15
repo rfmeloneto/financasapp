@@ -3,6 +3,7 @@ import 'package:casal_rico/data/services/api/api_service.dart';
 import 'package:casal_rico/domain/entities/entry_entity.dart';
 import 'package:casal_rico/domain/entities/expense_category_entity.dart';
 import 'package:casal_rico/domain/entities/income_category_entity.dart';
+import 'package:casal_rico/domain/entities/totalizer_entity.dart';
 
 class ApiRepositoryImp extends ApiRepository{
   final ApiService apiService;
@@ -38,7 +39,7 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  void addEntry(Map<String, dynamic> entry) async {
+  Future<void> addEntry(Map<String, dynamic> entry) async {
     try{
       return await apiService.addEntry(entry);
     }catch(e){
@@ -48,7 +49,7 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  void updateEntry(Map<String, dynamic> entry) async {
+  Future<void> updateEntry(Map<String, dynamic> entry) async {
     try{
       return await apiService.updateEntry(entry);
     }catch(e){
@@ -57,7 +58,7 @@ class ApiRepositoryImp extends ApiRepository{
   }
 
   @override
-  void deleteEntry(int id) async{
+  Future<void> deleteEntry(int id) async{
     try{
       return await apiService.deleteEntry(id);
     }catch(e){
@@ -144,6 +145,34 @@ class ApiRepositoryImp extends ApiRepository{
   Future<void> deleteIncomeCategory(int id) async {
     try{
       return await apiService.deleteIncomeCategory(id);
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+
+ @override
+  Future<List<TotalizerEntity>> getTotalizerByParam(Map<String, dynamic> param) async {
+    try{
+      return await apiService.getTotalizerByParam(param);
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> addTotalizer(Map<String, dynamic> totalizer) async {
+    try{
+      return await apiService.addTotalizer(totalizer);
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> updateTotalizer(Map<String, dynamic> totalizer) async {
+    try{
+      return await apiService.updateTotalizer(totalizer);
     }catch(e){
       throw Exception(e);
     }

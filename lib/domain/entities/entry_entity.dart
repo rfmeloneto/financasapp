@@ -1,7 +1,7 @@
 class EntryEntity {
   final int id;
-  final String? incomeCategory;
-  final String? expenseCategory;
+  final int? incomeCategory;
+  final int? expenseCategory;
   final bool isExpense;
   final String title;
   final double amount;

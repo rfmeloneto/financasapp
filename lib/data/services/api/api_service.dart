@@ -1,3 +1,4 @@
+import 'package:casal_rico/domain/entities/totalizer_entity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApiService{
@@ -80,5 +81,33 @@ class ApiService{
     await Supabase.instance.client.from('IncomeCategories').delete().eq('id', id);
   }
 
+
+
+
+  Future<List<TotalizerEntity>> getTotalizerByParam(Map<String, dynamic> param) async {
+    List<Map<String, dynamic>> response = [];
+    List<TotalizerEntity> totalizers = [];
+    var query = Supabase.instance.client.from('Totalizers').select();
+
+    for (var key in param.keys) {
+        query = query.eq(key, param[key]);
+      }
+
+    response = await query;
+
+    for (var element in response) {
+      totalizers.add(TotalizerEntity.fromMap(element));
+    }
+
+    return totalizers;
+  }
+
+ Future<void> addTotalizer(Map<String, dynamic> totalizer) async {
+    await Supabase.instance.client.from('Totalizers').insert(totalizer);
+  }
+
+ Future<void> updateTotalizer(Map<String, dynamic> totalizer) async {
+    await Supabase.instance.client.from('Totalizers').update(totalizer).eq('id', totalizer['id']);
+  }
 
 }
