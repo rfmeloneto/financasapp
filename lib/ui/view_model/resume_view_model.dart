@@ -1,10 +1,9 @@
 import 'package:casal_rico/domain/entities/totalizer_entity.dart';
+import 'package:casal_rico/domain/usecases/totalizer_use_case.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/usecases/base_usecase.dart';
-
 class ResumeViewModel extends ChangeNotifier{
-  final BaseUseCase totalizerUseCase;
+  final TotalizerUseCase totalizerUseCase;
 
   ResumeViewModel({required this.totalizerUseCase});
 

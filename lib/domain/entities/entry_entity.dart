@@ -1,5 +1,5 @@
 class EntryEntity {
-  final int id;
+  final int? id;
   final int? incomeCategory;
   final int? expenseCategory;
   final bool isExpense;
@@ -13,7 +13,7 @@ class EntryEntity {
   EntryEntity({
     this.incomeCategory,
     this.expenseCategory,
-    required this.id,
+    this.id,
     required this.isExpense,
     required this.title,
     required this.amount,

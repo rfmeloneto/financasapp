@@ -1,14 +1,13 @@
 import 'package:casal_rico/data/repositories/api/api_repository.dart';
 import 'package:casal_rico/domain/entities/totalizer_entity.dart';
-import 'package:casal_rico/domain/usecases/base_usecase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class TotalizerUseCase extends BaseUseCase {
+class TotalizerUseCase {
 
   final ApiRepository apiRepository;
 
   TotalizerUseCase(this.apiRepository);
-  @override
+
   Future<List<TotalizerEntity>> getTotalizerByParam(Map<String, dynamic> param) async {
     try{
       return await apiRepository.getTotalizerByParam(param);
@@ -17,12 +16,12 @@ class TotalizerUseCase extends BaseUseCase {
     }
   }
 
-  @override
+
   Future<void> addTotalizer(Map<String, dynamic> totalizer) async {
     await Supabase.instance.client.from('Totalizer').insert(totalizer);
   }
 
-  @override
+
   Future<void> updateTotalizer(Map<String, dynamic> totalizer) async {
 
     List<Map<String, dynamic>> response = [];
@@ -39,6 +38,12 @@ class TotalizerUseCase extends BaseUseCase {
       apiRepository.updateTotalizer(totalizer);
     }
 
+  }
+
+  Future<void> subtractTotalizerByEntryAmount({required Map<String, dynamic> totalizer, required int amount}) async {
+     final newamount = totalizer['amount'] - amount;
+     totalizer['amount'] = newamount;
+     apiRepository.updateTotalizer(totalizer);
   }
 
 }
